@@ -6,7 +6,7 @@ const BadRequestError = require('../errors/bad-request-error');
 const NoRightsError = require('../errors/no-rights-error');
 
 const getMovies = (req, res, next) => {
-  Movie.find({ owner: req.user._id })
+  Movie.find()
     .then((movies) => {
       res.status(OK_STATUS).send(movies);
     })
@@ -39,7 +39,7 @@ const createMovie = (req, res, next) => { // post route /movie
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError('Переданы некорректные данные при создании фильма'));
+        next(new BadRequestError('Переданы некорректные данные'));
         return;
       }
       next(err);
