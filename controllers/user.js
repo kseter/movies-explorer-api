@@ -65,7 +65,7 @@ const updateUserInfo = (req, res, next) => { // patch route /user/me
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
-      return res.status(OK_STATUS).send(user);
+      res.status(OK_STATUS).send(user);
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
