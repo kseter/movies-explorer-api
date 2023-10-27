@@ -68,7 +68,9 @@ const updateUserInfo = (req, res, next) => { // patch route /user/me
       res.status(OK_STATUS).send(user);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с такие email уже зарегистрирован'));
+      } else if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError('Некорректно введены данные'));
         return;
       }
